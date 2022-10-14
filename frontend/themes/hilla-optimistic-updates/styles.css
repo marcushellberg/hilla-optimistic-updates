@@ -1,2 +1,13 @@
-@import url('./main-layout.css');
-@import url('line-awesome/dist/line-awesome/css/line-awesome.min.css');
+optimistic-view {
+  display: grid;
+}
+
+#outlet {
+  display: grid;
+  grid-template-columns: minmax(var(--lumo-space-l), 1fr) minmax(auto, 60ch) minmax(var(--lumo-space-l), 1fr);
+  align-items: start;
+}
+
+#outlet > * {
+  grid-column: 2;
+}
