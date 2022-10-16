@@ -25,14 +25,22 @@ export class OptimisticView extends View {
     this.binder.submitTo(async (comment) => {
       if (!this.article) return;
       try {
+        this.article = {
+          ...this.article,
+          comments: [...this.article.comments, comment],
+        };
         const saved = await ArticleEndpoint.addComment(this.article.id, comment);
         this.article = {
           ...this.article,
-          comments: [...this.article.comments, saved],
+          comments: this.article.comments.map((c) => (c === comment ? saved : c)),
         };
         this.binder.clear();
       } catch (e) {
         console.log(e);
+        this.article = {
+          ...this.article,
+          comments: this.article.comments.filter((c) => c !== comment),
+        };
       }
     });
   }
