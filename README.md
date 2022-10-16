@@ -4,7 +4,7 @@ This example app displays a comment in the UI before persisting it to make the a
 
 ## Video tutorial
 
-You can find the associated tutorial for this repo at
+You can find the associated tutorial for this repo at https://youtu.be/Ogi39vAJHa8
 
 ## Requirements
 
