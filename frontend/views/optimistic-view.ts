@@ -30,6 +30,7 @@ export class OptimisticView extends View {
           ...this.article,
           comments: [...this.article.comments, saved],
         };
+        this.binder.clear();
       } catch (e) {
         console.log(e);
       }
