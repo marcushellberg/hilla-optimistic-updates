@@ -21,7 +21,20 @@ export class OptimisticView extends View {
     this.article = await ArticleEndpoint.getArticleById(1);
   }
 
-  async submitComment() {}
+  async submitComment() {
+    this.binder.submitTo(async (comment) => {
+      if (!this.article) return;
+      try {
+        const saved = await ArticleEndpoint.addComment(this.article.id, comment);
+        this.article = {
+          ...this.article,
+          comments: [...this.article.comments, saved],
+        };
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }
 
   render() {
     if (!this.article) return html` <h1>Loading...</h1> `;
