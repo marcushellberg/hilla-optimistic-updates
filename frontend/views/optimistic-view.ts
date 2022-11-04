@@ -25,11 +25,14 @@ export class OptimisticView extends View {
     this.binder.submitTo(async (comment) => {
       if (!this.article) return;
       try {
+        // Show the unsaved comment
         this.article = {
           ...this.article,
           comments: [...this.article.comments, comment],
         };
+        // Call the backend
         const saved = await ArticleEndpoint.addComment(this.article.id, comment);
+        // Swap out the unsaved comment for the saved comment
         this.article = {
           ...this.article,
           comments: this.article.comments.map((c) => (c === comment ? saved : c)),
@@ -37,6 +40,7 @@ export class OptimisticView extends View {
         this.binder.clear();
       } catch (e) {
         console.log(e);
+        // Remove the unsaved comment on failure
         this.article = {
           ...this.article,
           comments: this.article.comments.filter((c) => c !== comment),
